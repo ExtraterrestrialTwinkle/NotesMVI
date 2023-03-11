@@ -12,6 +12,8 @@ data class NoteDtoModel(
     val id: Long,
     @ColumnInfo(name = NotesContract.Columns.TITLE)
     val title: String,
+    @ColumnInfo(name = NotesContract.Columns.TEXT)
+    val text: String,
     @ColumnInfo(name = NotesContract.Columns.DATE)
     val date: LocalDateTime
 )

@@ -12,7 +12,7 @@ class MainReducer(
     private val useCase: BaseUseCase<List<NoteModel>>
 ) : BaseReducer<MainScreenState, MainScreenEvent>(initial) {
     override fun reduce(oldState: MainScreenState, event: MainScreenEvent) {
-        when(event) {
+        when (event) {
             is MainScreenEvent.Loading -> {
                 viewModelScope.launch {
                     setState(oldState.copy(isLoading = true, data = emptyList()))

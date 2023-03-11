@@ -7,6 +7,7 @@ object NotesContract {
     object Columns {
         const val ID = "id"
         const val TITLE = "title"
+        const val TEXT = "text"
         const val DATE = "date"
     }
 }
