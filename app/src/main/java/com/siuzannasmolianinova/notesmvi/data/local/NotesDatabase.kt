@@ -2,8 +2,10 @@ package com.siuzannasmolianinova.notesmvi.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.siuzannasmolianinova.notesmvi.data.local.NotesDatabase.Companion.DB_VERSION
 
+@TypeConverters(LocalDateTimeConverter::class)
 @Database(
     entities = [NoteDtoModel::class],
     version = DB_VERSION

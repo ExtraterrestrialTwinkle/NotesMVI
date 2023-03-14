@@ -35,9 +35,6 @@ abstract class BaseFragment<T : ViewBinding>(
         _binding = null
         super.onDestroyView()
     }
-
-    protected abstract fun render()
-
     protected open fun setupViewModels() {}
     protected open fun setupViews() {}
 }

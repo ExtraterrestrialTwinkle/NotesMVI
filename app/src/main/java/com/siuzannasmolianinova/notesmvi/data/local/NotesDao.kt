@@ -15,12 +15,12 @@ interface NotesDao {
     @Upsert
     fun saveChanges(note: NoteDtoModel)
 
-    @Query("SELECT * FROM ${NotesContract.TABLE_NAME} WHERE ${NotesContract.Columns.ID} =: id")
+    @Query("SELECT * FROM ${NotesContract.TABLE_NAME} WHERE ${NotesContract.Columns.ID} = :id")
     fun getNote(id: Long): NoteDtoModel
 
     @Query("SELECT * FROM ${NotesContract.TABLE_NAME}")
     fun getAllNotes(): List<NoteDtoModel>
 
-    @Query("DELETE * FROM ${NotesContract.TABLE_NAME} WHERE ${NotesContract.Columns.ID} =: id")
+    @Query("DELETE FROM ${NotesContract.TABLE_NAME} WHERE ${NotesContract.Columns.ID} = :id")
     fun deleteNote(id: Long)
 }

@@ -15,7 +15,7 @@ class MainReducer(
         when (event) {
             is MainScreenEvent.Loading -> {
                 viewModelScope.launch {
-                    setState(oldState.copy(isLoading = true, data = emptyList()))
+                    setState(oldState.copy(isLoading = true, data = emptyList(), error = null))
                     try {
                         useCase().let { notes ->
                             if (notes.isNotEmpty()) {
@@ -30,7 +30,7 @@ class MainReducer(
                 }
             }
             is MainScreenEvent.ShowNotes -> {
-                setState(oldState.copy(isLoading = false, data = event.notes))
+                setState(oldState.copy(isLoading = false, data = event.notes, error = null))
             }
             is MainScreenEvent.ShowError -> {
                 setState(oldState.copy(isLoading = false, data = emptyList(), error = event.message))

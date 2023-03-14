@@ -4,7 +4,7 @@ import com.siuzannasmolianinova.notesmvi.databinding.FragmentNoteBinding
 import com.siuzannasmolianinova.notesmvi.ui.base.BaseFragment
 
 class NoteFragment : BaseFragment<FragmentNoteBinding>(FragmentNoteBinding::inflate) {
-    override fun render() {
+    fun render() {
         TODO("Not yet implemented")
     }
 }

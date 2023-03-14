@@ -2,7 +2,9 @@ package com.siuzannasmolianinova.notesmvi.data.repo
 
 import com.siuzannasmolianinova.notesmvi.domain.NoteModel
 import com.siuzannasmolianinova.notesmvi.domain.repository.NotesRepository
+import dagger.hilt.android.scopes.ActivityScoped
 
+@ActivityScoped
 class NotesRepositoryImpl : NotesRepository {
     override suspend fun getAllNotes(): List<NoteModel> {
         // TODO: implement receiving of all notes from db
