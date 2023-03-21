@@ -10,13 +10,14 @@ import com.siuzannasmolianinova.notesmvi.domain.NoteModel
 import com.siuzannasmolianinova.notesmvi.ui.main.NotesListAdapter.NotesListHolder
 import java.time.format.DateTimeFormatter
 
-class NotesListAdapter(
-    private val onClick: (Long) -> Unit
-) : ListAdapter<NoteModel, NotesListHolder>(DiffCallback()) {
+class NotesListAdapter : ListAdapter<NoteModel, NotesListHolder>(DiffCallback()) {
+
+    var clickListener: ((id: Long) -> Unit?)? = null
+    var onDeleteClickListener: ((id: Long) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesListHolder {
         val binding = ListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return NotesListHolder(binding, onClick)
+        return NotesListHolder(binding)
     }
 
     override fun onBindViewHolder(holder: NotesListHolder, position: Int) {
@@ -24,26 +25,19 @@ class NotesListAdapter(
     }
 
     inner class NotesListHolder(
-        private val binding: ListItemBinding,
-        onClick: (Long) -> Unit
+        private val binding: ListItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-
-        private var currentItemId: Long? = null
-
-        init {
-            binding.root.setOnClickListener {
-                this.currentItemId?.let { onClick(it) }
-            }
-        }
 
         fun bind(note: NoteModel) {
             binding.run {
-                currentItemId = note.id
+                root.setOnClickListener {
+                    note.id.let { clickListener?.invoke(it) }
+                }
                 title.text = note.title
                 noteText.text = note.text
                 date.text = note.date.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
                 deleteButton.setOnClickListener {
-                    currentList.remove(note)
+                    onDeleteClickListener?.invoke(note.id)
                 }
             }
         }

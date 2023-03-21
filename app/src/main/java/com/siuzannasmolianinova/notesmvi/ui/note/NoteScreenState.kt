@@ -6,5 +6,9 @@ import com.siuzannasmolianinova.notesmvi.ui.base.UiState
 data class NoteScreenState(
     val isLoading: Boolean = true,
     val note: NoteModel? = null,
-    val message: String? = null
-) : UiState
+    val error: String? = null
+) : UiState {
+    companion object {
+        fun initial() = NoteScreenState(isLoading = true, note = null, error = null)
+    }
+}

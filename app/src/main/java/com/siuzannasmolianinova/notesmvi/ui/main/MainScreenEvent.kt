@@ -7,6 +7,7 @@ sealed class MainScreenEvent : UiEvent {
     object Loading : MainScreenEvent()
     data class ShowNotes(val notes: List<NoteModel>) : MainScreenEvent()
     data class ShowError(val message: String?) : MainScreenEvent()
+    data class DeleteNote(val id: Long) : MainScreenEvent()
 }
 
 

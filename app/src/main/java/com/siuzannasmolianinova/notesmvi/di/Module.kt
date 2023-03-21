@@ -5,11 +5,7 @@ import androidx.room.Room
 import com.siuzannasmolianinova.notesmvi.data.local.NotesDao
 import com.siuzannasmolianinova.notesmvi.data.local.NotesDatabase
 import com.siuzannasmolianinova.notesmvi.data.repo.NotesRepositoryImpl
-import com.siuzannasmolianinova.notesmvi.domain.NoteModel
 import com.siuzannasmolianinova.notesmvi.domain.repository.NotesRepository
-import com.siuzannasmolianinova.notesmvi.domain.usecase.BaseUseCase
-import com.siuzannasmolianinova.notesmvi.domain.usecase.LoadNotesUseCase
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,13 +16,9 @@ import javax.inject.Singleton
 @Module
 @InstallIn(ViewModelComponent::class)
 class RepositoryModule {
-//
-//    @Binds
-//
-//    abstract fun providesUseCase(useCase: LoadNotesUseCase): BaseUseCase<List<NoteModel>>
 
     @Provides
-    fun providesRepository(): NotesRepository = NotesRepositoryImpl()
+    fun providesRepository(notesDao: NotesDao): NotesRepository = NotesRepositoryImpl(notesDao)
 }
 
 @Module

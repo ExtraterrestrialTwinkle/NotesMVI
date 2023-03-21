@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 
 @Entity(tableName = NotesContract.TABLE_NAME)
 data class NoteDtoModel(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = NotesContract.Columns.ID)
     val id: Long,
     @ColumnInfo(name = NotesContract.Columns.TITLE)

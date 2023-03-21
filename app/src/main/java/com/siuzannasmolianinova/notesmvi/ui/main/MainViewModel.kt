@@ -1,5 +1,6 @@
 package com.siuzannasmolianinova.notesmvi.ui.main
 
+import com.siuzannasmolianinova.notesmvi.domain.usecase.DeleteNoteUseCase
 import com.siuzannasmolianinova.notesmvi.domain.usecase.LoadNotesUseCase
 import com.siuzannasmolianinova.notesmvi.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -8,12 +9,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    loadNotesUseCase: LoadNotesUseCase
-) :
-    BaseViewModel<MainScreenState, MainScreenEvent>() {
+    loadNotesUseCase: LoadNotesUseCase,
+    deleteNoteUseCase: DeleteNoteUseCase
+) : BaseViewModel<MainScreenState, MainScreenEvent>() {
+
     private val reducer = MainReducer(
         initial = MainScreenState.initial(),
-        useCase = loadNotesUseCase,
+        loadNotesUseCase = loadNotesUseCase,
+        deleteNoteUseCase = deleteNoteUseCase,
         viewModelScope = scope
     )
 

@@ -3,7 +3,6 @@ package com.siuzannasmolianinova.notesmvi.ui.main
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
@@ -15,15 +14,13 @@ import androidx.navigation.fragment.findNavController
 import com.siuzannasmolianinova.notesmvi.R
 import com.siuzannasmolianinova.notesmvi.databinding.FragmentMainBinding
 import com.siuzannasmolianinova.notesmvi.ui.base.BaseFragment
+import com.siuzannasmolianinova.notesmvi.ui.utils.showError
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::inflate) {
-
-    companion object {
-        fun newInstance() = MainFragment()
-    }
 
     private val viewModel: MainViewModel by viewModels()
     private lateinit var notesAdapter: NotesListAdapter
@@ -63,18 +60,29 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
     }
 
     private fun initAdapter() {
-        notesAdapter = NotesListAdapter { id ->
-            findNavController().navigate(
-                MainFragmentDirections.actionMainFragmentToNoteFragment(id)
-            )
+        notesAdapter = NotesListAdapter().apply {
+            clickListener = ::navigate
+            onDeleteClickListener = ::deleteItem
         }
         binding.list.adapter = notesAdapter
+        binding.list.itemAnimator = null
+    }
+
+    private fun navigate(id: Long) {
+        findNavController().navigate(
+            MainFragmentDirections.actionMainFragmentToNoteFragment(id)
+        )
+    }
+
+    private fun deleteItem(id: Long) {
+        viewModel.sendEvent(MainScreenEvent.DeleteNote(id))
     }
 
     private fun render(state: MainScreenState) {
         state.error
             ?.let {
                 showError(it)
+                binding.loader.isVisible = false
             }
             ?: if (!state.isLoading) {
                 notesAdapter.submitList(state.data)
@@ -82,9 +90,5 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
             } else {
                 binding.loader.isVisible = true
             }
-    }
-
-    private fun showError(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 }
