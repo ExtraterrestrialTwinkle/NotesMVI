@@ -8,5 +8,7 @@ import javax.inject.Inject
 class LoadNoteUseCase @Inject constructor(
     private val notesRepository: NotesRepository
 ) : BaseUseCase<NoteModel?, Long>() {
-    override suspend fun run(args: Long) = notesRepository.loadNote(args).toNoteModel()
+    override suspend fun run(args: Long): NoteModel {
+        return notesRepository.loadNote(args).toNoteModel()
+    }
 }

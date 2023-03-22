@@ -12,7 +12,7 @@ import javax.inject.Inject
 class NoteViewModel @Inject constructor(
     loadNoteUseCase: LoadNoteUseCase,
     saveNoteUseCase: SaveNoteUseCase,
-    private val savedState: SavedStateHandle
+    savedState: SavedStateHandle
 ) : BaseViewModel<NoteScreenState, NoteScreenEvent>() {
 
     private val reducer = NoteReducer(

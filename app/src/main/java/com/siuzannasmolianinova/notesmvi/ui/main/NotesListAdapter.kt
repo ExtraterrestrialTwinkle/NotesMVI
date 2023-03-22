@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.siuzannasmolianinova.notesmvi.databinding.ListItemBinding
 import com.siuzannasmolianinova.notesmvi.domain.NoteModel
 import com.siuzannasmolianinova.notesmvi.ui.main.NotesListAdapter.NotesListHolder
-import java.time.format.DateTimeFormatter
+import com.siuzannasmolianinova.notesmvi.ui.utils.format
 
 class NotesListAdapter : ListAdapter<NoteModel, NotesListHolder>(DiffCallback()) {
 
-    var clickListener: ((id: Long) -> Unit?)? = null
+    var clickListener: ((id: Long, title: String) -> Unit?)? = null
     var onDeleteClickListener: ((id: Long) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesListHolder {
@@ -31,11 +31,11 @@ class NotesListAdapter : ListAdapter<NoteModel, NotesListHolder>(DiffCallback())
         fun bind(note: NoteModel) {
             binding.run {
                 root.setOnClickListener {
-                    note.id.let { clickListener?.invoke(it) }
+                    clickListener?.invoke(note.id, note.title)
                 }
                 title.text = note.title
                 noteText.text = note.text
-                date.text = note.date.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+                date.text = note.date.format()
                 deleteButton.setOnClickListener {
                     onDeleteClickListener?.invoke(note.id)
                 }

@@ -8,24 +8,45 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.siuzannasmolianinova.notesmvi.ui.main.MainFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
+        android:label="Your Notes"
+        tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_noteFragment"
             app:destination="@id/noteFragment">
             <argument
                 android:name="id"
-                app:argType="long"
-                android:defaultValue="0L" />
+                android:defaultValue="0L"
+                app:argType="long" />
         </action>
     </fragment>
     <fragment
         android:id="@+id/noteFragment"
         android:name="com.siuzannasmolianinova.notesmvi.ui.note.NoteFragment"
-        android:label="NoteFragment" >
+        tools:layout="@layout/fragment_note">
         <argument
             android:name="id"
-            app:argType="long"
-            android:defaultValue="0L" />
+            android:defaultValue="0L"
+            app:argType="long" />
+        <argument
+            android:name="title"
+            android:defaultValue=""
+            app:argType="string" />
+        <action
+            android:id="@+id/action_noteFragment_to_addNoteDialogFragment"
+            app:destination="@id/addNoteDialogFragment">
+            <argument
+                android:name="title"
+                android:defaultValue=""
+                app:argType="string" />
+        </action>
     </fragment>
+    <dialog
+        android:id="@+id/addNoteDialogFragment"
+        android:name="com.siuzannasmolianinova.notesmvi.ui.note.dialog.AddNoteDialogFragment"
+        tools:layout="@layout/dialog_add_note">
+        <argument
+            android:name="title"
+            android:defaultValue=""
+            app:argType="string" />
+    </dialog>
 </navigation>

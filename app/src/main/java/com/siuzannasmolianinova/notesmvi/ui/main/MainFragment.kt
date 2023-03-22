@@ -16,7 +16,6 @@ import com.siuzannasmolianinova.notesmvi.databinding.FragmentMainBinding
 import com.siuzannasmolianinova.notesmvi.ui.base.BaseFragment
 import com.siuzannasmolianinova.notesmvi.ui.utils.showError
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -68,9 +67,9 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
         binding.list.itemAnimator = null
     }
 
-    private fun navigate(id: Long) {
+    private fun navigate(id: Long, title: String) {
         findNavController().navigate(
-            MainFragmentDirections.actionMainFragmentToNoteFragment(id)
+            MainFragmentDirections.actionMainFragmentToNoteFragment(id, title)
         )
     }
 
@@ -81,7 +80,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
     private fun render(state: MainScreenState) {
         state.error
             ?.let {
-                showError(it)
+                showError(binding.root, null, it)
                 binding.loader.isVisible = false
             }
             ?: if (!state.isLoading) {

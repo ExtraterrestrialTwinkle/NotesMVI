@@ -2,4 +2,7 @@
     <string name="app_name">NotesMVI</string>
     <string name="add_note">Add note</string>
     <string name="save_note">Save note</string>
+    <string name="create_new_note">Add new note</string>
+    <string name="title">Title</string>
+    <string name="OK">OK</string>
 </resources>
